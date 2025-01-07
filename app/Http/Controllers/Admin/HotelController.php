@@ -84,7 +84,7 @@ class HotelController extends Controller
 
             if ($request->hasFile('file_path')) {
                 $file = $request->file('file_path');
-                $folder = 'hoteltype';
+                $folder = 'hotel';
                 $file_path = Storage::disk('custom_upload')->putFileAs($folder, $file, $file->getClientOriginalName());
 
                 if (!$file_path) {
@@ -119,7 +119,7 @@ class HotelController extends Controller
 
             if ($request->hasFile('file_path')) {
                 $file = $request->file('file_path');
-                $folder = 'hoteltype';
+                $folder = 'hotel';
                 $file_path = Storage::disk('custom_upload')->putFileAs($folder, $file, $file->getClientOriginalName());
 
                 if (!$file_path) {
