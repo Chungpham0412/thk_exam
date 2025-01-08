@@ -16,9 +16,6 @@
     }
 
     #search-form {
-        max-width: 600px;
-
-
         .form-control {
             display: block;
             width: 100%;
@@ -47,7 +44,12 @@
 
         #hotel_name {
             display: inline-block;
-            max-width: 400px;
+            max-width: 360px;
+        }
+
+        #prefecture {
+            max-width: 200px;
+            display: inline-block;
         }
     }
 

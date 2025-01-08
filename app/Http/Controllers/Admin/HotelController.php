@@ -17,12 +17,14 @@ class HotelController extends Controller
 
     public function showSearch(): View
     {
-        return view('admin.hotel.search');
+        $var['prefectures'] = Prefecture::get();
+        return view('admin.hotel.search', $var);
     }
 
     public function showResult(): View
     {
-        return view('admin.hotel.result');
+        $var['prefectures'] = Prefecture::get();
+        return view('admin.hotel.result', $var);
     }
 
     public function showEdit(): View
@@ -55,10 +57,11 @@ class HotelController extends Controller
     {
         $var = [];
 
-        $hotelNameToSearch = $request->input('hotel_name');
-        $hotelList = Hotel::getHotelListByName($hotelNameToSearch);
+        $hotelList = Hotel::getList($request->all());
 
         $var['hotelList'] = $hotelList;
+        $var['prefectures'] = Prefecture::get();
+        $var['request'] = $request->all();
 
         return view('admin.hotel.result', $var);
     }
@@ -154,7 +157,7 @@ class HotelController extends Controller
             $hotel = Hotel::find($request->input('hotel_id'));
             $hotel->delete();
             DB::commit();
-            return redirect()->back()->with('success', 'Hotel deleted successfully.');
+            return redirect()->route('adminHotelSearchPage')->with('success', 'Hotel deleted successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', $e->getMessage());
