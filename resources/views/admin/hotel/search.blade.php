@@ -13,13 +13,25 @@
         <h2 class="title">検索画面</h2>
         <hr>
         <div class="search-hotel-name">
-            <form action="{{ route('adminHotelSearchResult') }}" method="post">
+            <form id="search-form" action="{{ route('adminHotelSearchResult') }}" method="post">
                 @csrf
-                <input type="text" name="hotel_name" value="" placeholder="ホテル名">
+                <input type="text" name="hotel_name" id="hotel_name" value="" placeholder="ホテル名">
                 <button type="submit">検索</button>
             </form>
         </div>
         <hr>
     </div>
     @yield('search_results')
+@endsection
+@section('page_js')
+<script>
+    document.getElementById('search-form').addEventListener('submit', function(event) {
+        const hotelNameInput = document.getElementById('hotel_name');
+
+        if (hotelNameInput.value.trim().length === 0) {
+            event.preventDefault();
+            alert('ホテル名を入力してください。');
+        }
+    });
+</script>
 @endsection
