@@ -38,11 +38,7 @@
                                     {{ (string) $hotel['updated_at'] }}
                                 </td>
                                 <td>
-                                    <form action="{{ route('adminHotelEditPage') }}" method="get">
-                                        @csrf
-                                        <input type="hidden" name="hotel_id" value="{{ $hotel['hotel_id'] }}">
-                                        <button type="submit">編集</button>
-                                    </form>
+                                    <a href="{{ route('adminHotelEditPage', ['hotel_id' => $hotel['hotel_id']]) }}">編集</a>
                                 </td>
                                 <td>
                                     <form action="{{ route('adminHotelDeleteProcess') }}" method="post" onsubmit="return confirm('本当に削除しますか？');">

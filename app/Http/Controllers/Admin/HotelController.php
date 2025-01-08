@@ -27,19 +27,21 @@ class HotelController extends Controller
         return view('admin.hotel.result', $var);
     }
 
-    public function showEdit(): View
+    public function showEdit($hotel_id): View
     {
         try {
-            $id = request()->input('hotel_id');
-            $validation = Validator::make(request()->all(), [
+            $validation = Validator::make([
+                'hotel_id' => $hotel_id,
+            ], [
                 'hotel_id' => 'required|exists:hotels,hotel_id',
             ]);
+            $data['route'] = route('adminHotelEditProcess', ['hotel_id' => $hotel_id]);
             if ($validation->fails()) {
                 return view('admin.errors.404');
             }
-            $data['hotel'] = Hotel::find($id);
+            $data['hotel'] = Hotel::find($hotel_id);
             $data['prefectures'] = Prefecture::get();
-            return view('admin.hotel.edit', $data);
+            return view('admin.hotel.form', $data);
         } catch (\Exception $e) {
             return view('admin.errors.404');
         }
@@ -47,8 +49,9 @@ class HotelController extends Controller
 
     public function showCreate(): View
     {
+        $data['route'] = route('adminHotelCreateProcess');
         $data['prefectures'] = Prefecture::get();
-        return view('admin.hotel.create', $data);
+        return view('admin.hotel.form', $data);
     }
 
     /** post methods */
@@ -66,40 +69,37 @@ class HotelController extends Controller
         return view('admin.hotel.result', $var);
     }
 
-    public function edit(Request $request): \Illuminate\Http\RedirectResponse
+    public function edit($hotel_id, Request $request): \Illuminate\Http\RedirectResponse
     {
         DB::beginTransaction();
         try {
             $validation = Validator::make($request->all(), [
-                'hotel_id' => 'required|exists:hotels,hotel_id',
                 'hotel_name' => 'required|string|max:255',
                 'prefecture_id' => 'required|exists:prefectures,prefecture_id',
                 'file_path' => 'nullable|file|image|mimes:jpeg,png,jpg,gif|max:5120',
             ]);
-
             if ($validation->fails()) {
                 return redirect()->back()->withErrors($validation->errors())->withInput();
             }
 
-            $hotel = Hotel::find($request->input('hotel_id'));
+            $hotel = Hotel::find($hotel_id);
             $hotel->hotel_name = $request->input('hotel_name');
             $hotel->prefecture_id = $request->input('prefecture_id');
 
-            if ($request->hasFile('file_path')) {
-                $file = $request->file('file_path');
+            if ($request->hasFile('image_hotel')) {
+                $file = $request->file('image_hotel');
                 $folder = 'hotel';
                 $file_path = Storage::disk('custom_upload')->putFileAs($folder, $file, $file->getClientOriginalName());
 
                 if (!$file_path) {
                     return redirect()->back()->with('error', 'Failed to upload file.')->withInput();
                 }
-
-                $hotel->file_path = $file_path;
+                $file_path;
             }
-
+            $hotel->file_path = $file_path ?? null;
             $hotel->save();
             DB::commit();
-            return redirect()->route('adminHotelEditPage')->with('success', 'Hotel updated successfully.');
+            return redirect()->route('adminHotelEditPage', ['hotel_id' => $hotel_id])->with('success', 'Hotel updated successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', $e->getMessage())->withInput();
@@ -110,18 +110,18 @@ class HotelController extends Controller
     {
         DB::beginTransaction();
         try {
-            $validation = Validator::make($request->all(), [
+            $validator = Validator::make($request->all(), [
                 'hotel_name' => 'required|string|max:255',
                 'prefecture_id' => 'required|exists:prefectures,prefecture_id',
                 'file_path' => 'nullable|file|image|mimes:jpeg,png,jpg,gif|max:5120',
             ]);
 
-            if ($validation->fails()) {
-                return redirect()->back()->withErrors($validation->errors())->withInput();
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            if ($request->hasFile('file_path')) {
-                $file = $request->file('file_path');
+            if ($request->hasFile('image_hotel')) {
+                $file = $request->file('image_hotel');
                 $folder = 'hotel';
                 $file_path = Storage::disk('custom_upload')->putFileAs($folder, $file, $file->getClientOriginalName());
 
@@ -137,7 +137,7 @@ class HotelController extends Controller
             $hotel->save();
 
             DB::commit();
-            return redirect()->route('adminHotelCreatePage')->with('success', 'Hotel created successfully.');
+            return redirect()->route('adminHotelEditPage', ['hotel_id' => $hotel->hotel_id])->with('success', 'Hotel created successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', $e->getMessage())->withInput();
