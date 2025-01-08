@@ -11,6 +11,6 @@
 <div class="error-container">
     <h1 class="error-title">404</h1>
     <p class="error-message">Oops! The page you are looking for doesn’t exist.</p>
-    <a href="/" class="error-button">Back to Home</a>
+    <a href="/" class="error-button">戻る to Home</a>
 </div>
 @endsection

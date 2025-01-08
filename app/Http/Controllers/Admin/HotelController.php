@@ -76,8 +76,10 @@ class HotelController extends Controller
             $validation = Validator::make($request->all(), [
                 'hotel_name' => 'required|string|max:255',
                 'prefecture_id' => 'required|exists:prefectures,prefecture_id',
-                'file_path' => 'nullable|file|image|mimes:jpeg,png,jpg,gif|max:5120',
+                'file_path' => 'nullable|string',
+                'image_hotel' => 'nullable|file|image|mimes:jpeg,png,jpg,gif|max:5120',
             ]);
+
             if ($validation->fails()) {
                 return redirect()->back()->withErrors($validation->errors())->withInput();
             }
@@ -95,6 +97,8 @@ class HotelController extends Controller
                     return redirect()->back()->with('error', 'Failed to upload file.')->withInput();
                 }
                 $file_path;
+            } elseif ($request->input('file_path') != null) {
+                $file_path = $request->input('file_path');
             }
             $hotel->file_path = $file_path ?? null;
             $hotel->save();
@@ -113,7 +117,7 @@ class HotelController extends Controller
             $validator = Validator::make($request->all(), [
                 'hotel_name' => 'required|string|max:255',
                 'prefecture_id' => 'required|exists:prefectures,prefecture_id',
-                'file_path' => 'nullable|file|image|mimes:jpeg,png,jpg,gif|max:5120',
+                'image_hotel' => 'nullable|file|image|mimes:jpeg,png,jpg,gif|max:5120',
             ]);
 
             if ($validator->fails()) {

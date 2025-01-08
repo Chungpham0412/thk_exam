@@ -1,4 +1,5 @@
-.search-hotel-name {
+.search-hotel-name,
+.search-booking-name {
     * {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
@@ -16,6 +17,18 @@
     }
 
     #search-form {
+        .list_search {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            // grid-auto-rows: 100px;
+            gap: 20px;
+            padding: 0 32px;
+
+            @media (max-width: 576px) {
+                grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+            }
+        }
+
         .form-control {
             display: block;
             width: 100%;

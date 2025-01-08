@@ -25,10 +25,10 @@
             <form id="multi-step-form" action="{{ $route }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div id="step-1" class="active">
-                    <h3>Information</h3>
-                    <!-- Hotel Name -->
+                    <h3>情報</h3>
+                    <!-- ホテル名 -->
                     <div class="form-group">
-                        <label for="hotel_name">Hotel Name <span class="required">*</span></label>
+                        <label for="hotel_name">ホテル名 <span class="required">*</span></label>
                         <input type="text" name="hotel_name" id="hotel_name" value="{{ $hotel->hotel_name ?? old('hotel_name') }}" placeholder="Enter hotel name" required>
                         @error('hotel_name')
                             <span class="error">{{ $message }}</span>
@@ -51,9 +51,9 @@
                         @enderror
                     </div>
 
-                    <!-- Hotel Image -->
+                    <!-- Image -->
                     <div class="form-group">
-                        <label for="image">Hotel Image</label>
+                        <label for="image">Image</label>
                         <input type="hidden" name="file_path" id="image" accept="image/*" onchange="previewImage(event)" value="{{$hotel->file_path ?? ''}}">
                         <input type="file" name="image_hotel" id="image_hotel" accept="image/*" onchange="previewImage(event)" value="{{$hotel->file_path ?? ''}}">
                         @error('file_path')
@@ -62,10 +62,10 @@
                         <!-- Image Preview -->
                         <div class="image-preview">
                             @if(!empty($hotel) && $hotel->file_path)
-                                <img id="image-preview" src="/assets/img/{{ $hotel->file_path }}" alt="Hotel Image">
+                                <img id="image-preview" src="/assets/img/{{ $hotel->file_path }}" alt="Image">
                                 <button type="button" id="delete-image-btn" class="btn btn-danger" onclick="deleteImage()">Xóa ảnh</button>
                             @else
-                                <img id="image-preview" src="#" alt="Hotel Image" style="display: none;">
+                                <img id="image-preview" src="#" alt="Image" style="display: none;">
                                 <button type="button" id="delete-image-btn" class="btn btn-danger" style="display: none;" onclick="deleteImage()">Xóa ảnh</button>
                             @endif
                         </div>
@@ -73,27 +73,27 @@
                     {{-- <button type="button" class="btn btn-primary" onclick="nextStep()">Tiếp tục</button>
                     <button type="button" class="btn btn-secondary" onclick="prevStep()">Quay lại</button> --}}
                     <div class="form-actions">
-                        <a href="http://localhost/admin/hotel/search" class="btn btn-secondary">Cancel</a>
-                        <button type="button" class="btn btn-primary" onclick="nextStep()">Confirm</button>
+                        <a href="http://localhost/admin/hotel/search" class="btn btn-secondary">キャンセル</a>
+                        <button type="button" class="btn btn-primary" onclick="nextStep()">確認する</button>
                     </div>
                 </div>
                 <!-- Bước 2: Xác nhận -->
                 <div id="step-2" style="display: none;">
                     <h3>Preview</h3>
-                    <p>Hotel Name: <span id="confirm-hotel-name"></span></p>
+                    <p>ホテル名: <span id="confirm-hotel-name"></span></p>
                     <p>Prefecture: <span id="confirm-prefecture"></span></p>
                     <p>
                         <img id="confirm-image-preview" src="" alt="Hotel Preview" style="max-width: 200px; display: none;">
                     </p>
                     <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">戻る</button>
                         <button type="submit" class="btn btn-primary" onclick="nextStep()">Submit</button>
                     </div>
                 </div>
                 <!-- Submit Button -->
                 {{-- <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{ route('adminHotelSearchPage') }}" class="btn btn-secondary">Cancel</a>
+                    <a href="{{ route('adminHotelSearchPage') }}" class="btn btn-secondary">キャンセル</a>
                 </div> --}}
             </form>
         </div>
@@ -143,7 +143,7 @@ function nextStep() {
         const imageHotel = document.getElementById('image_hotel');
 console.log('imageHotel', imageHotel);
         if (!hotelName || !prefecture) {
-            alert("Vui lòng nhập đầy đủ thông tin ở bước này!");
+            alert("このステップでは完全な情報を入力してください。");
             return; // Dừng nếu không hợp lệ
         }
 
