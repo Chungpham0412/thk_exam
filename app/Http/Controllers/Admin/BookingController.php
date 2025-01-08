@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Bookings;
 use App\Models\Hotel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
@@ -58,7 +59,10 @@ class BookingController extends Controller
     {
         try {
             $data['hotels'] = Hotel::get();
-            $data['booking'] = Bookings::find($booking_id);
+            $booking = Bookings::find($booking_id);
+            $booking->chekin_time = Carbon::parse($booking->chekin_time)->format('Y-m-d');
+            $booking->checkout_time = Carbon::parse($booking->checkout_time)->format('Y-m-d');
+            $data['booking'] = $booking;
             $data['route'] = route('admin.bookings.update', ['booking_id' => $booking_id]);
             $data['method'] = 'PUT';
             return view('admin.bookings.form', $data);
