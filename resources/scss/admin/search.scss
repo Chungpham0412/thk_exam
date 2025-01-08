@@ -1,0 +1,84 @@
+.search-hotel-name {
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+        color: inherit;
+        font: inherit;
+        margin: 0;
+    }
+
+    #search-form {
+        max-width: 600px;
+
+
+        .form-control {
+            display: block;
+            width: 100%;
+            height: 40px;
+            padding: 8px 13px;
+            font-size: 12px;
+            line-height: 1.42857;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+            -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+            transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+
+            &:hover {
+                border: 1px solid #b9b9b9;
+                border-top-color: #a0a0a0;
+                -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+                box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        #hotel_name {
+            display: inline-block;
+            max-width: 400px;
+        }
+    }
+
+    .btn {
+        display: inline-block;
+        margin-bottom: 0;
+        font-weight: normal;
+        text-align: center;
+        vertical-align: middle;
+        touch-action: manipulation;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        padding: 8px 24px;
+        font-size: 12px;
+        border-radius: 3px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        height: 40px;
+        background-color: #1585ef;
+        color: #fff;
+
+        &:hover {
+            background-color: #0056b3;
+        }
+
+        &:active {
+            background-color: #003d80;
+        }
+    }
+}

@@ -15,8 +15,8 @@
         <div class="search-hotel-name">
             <form id="search-form" action="{{ route('adminHotelSearchResult') }}" method="post">
                 @csrf
-                <input type="text" name="hotel_name" id="hotel_name" value="" placeholder="ホテル名">
-                <button type="submit">検索</button>
+                <input type="text" name="hotel_name" id="hotel_name" value="" class="form-control" placeholder="ホテル名">
+                <button type="submit" class="btn">検索</button>
             </form>
         </div>
         <hr>
