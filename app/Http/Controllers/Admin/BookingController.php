@@ -15,6 +15,7 @@ class BookingController extends Controller
     {
         try {
             $data['bookings'] = Bookings::get();
+            $data['request'] = request()->all();
             return view('admin.bookings.list', $data);
         } catch (\Exception $e) {
             throw $e;
@@ -47,7 +48,7 @@ class BookingController extends Controller
                 return redirect()->back()->withErrors($validation->errors())->withInput();
             }
             $booking = Bookings::create($validation->validated());
-            return redirect()->route('admin.bookings.edit', ['booking_id' => $booking->booking_id]);
+            return redirect()->route('admin.bookings.edit', ['booking_id' => $booking->booking_id])->with('success', 'Booking created successfully');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
         }
@@ -80,7 +81,7 @@ class BookingController extends Controller
                 return redirect()->back()->withErrors($validation->errors())->withInput();
             }
             Bookings::find($booking_id)->update($validation->validated());
-            return redirect()->route('admin.bookings.index');
+            return redirect()->route('admin.bookings.edit', ['booking_id' => $booking_id])->with('success', 'Booking updated successfully');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
         }
@@ -107,6 +108,7 @@ class BookingController extends Controller
     public function searchResult(Request $request): View
     {
         $data['bookings'] = Bookings::getList($request->all());
+        $data['request'] = $request->all();
         return view('admin.bookings.result', $data);
     }
 }

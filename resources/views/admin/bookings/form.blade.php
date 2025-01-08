@@ -22,7 +22,7 @@
                 {{ session('error') }}
             </div>
             @endsession
-            <form id="multi-step-form" action="{{ $route }}" method="{{ $method }}" enctype="multipart/form-data">
+            <form id="multi-step-form" action="{{ $route }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @if ($method == 'PUT')
                     @method('PUT')

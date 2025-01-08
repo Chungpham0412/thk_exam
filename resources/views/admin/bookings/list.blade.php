@@ -25,12 +25,12 @@
                         <input type="text" name="customer_contact" id="customer_contact" value="{{ !empty($request['customer_contact']) ? $request['customer_contact'] : '' }}" class="form-control" placeholder="お客様連絡先">
                     </div>
                     <div class="form-group">
-                        <label for="checkin_date">チェックイン日</label>
-                        <input type="date" name="checkin_date" id="checkin_date" value="{{ !empty($request['checkin_date']) ? $request['checkin_date'] : '' }}" class="form-control" placeholder="チェックイン日">
+                        <label for="chekin_time">チェックイン日</label>
+                        <input type="date" name="chekin_time" id="chekin_time" value="{{ !empty($request['chekin_time']) ? $request['chekin_time'] : '' }}" class="form-control" placeholder="チェックイン日">
                     </div>
                     <div class="form-group">
-                        <label for="checkout_date">チェックアウト日</label>
-                        <input type="date" name="checkout_date" id="checkout_date" value="{{ !empty($request['checkout_date']) ? $request['checkout_date'] : '' }}" class="form-control" placeholder="チェックアウト日">
+                        <label for="checkout_time">チェックアウト日</label>
+                        <input type="date" name="checkout_time" id="checkout_time" value="{{ !empty($request['checkout_time']) ? $request['checkout_time'] : '' }}" class="form-control" placeholder="チェックアウト日">
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn">検索</button>

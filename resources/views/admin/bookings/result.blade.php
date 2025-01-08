@@ -8,17 +8,20 @@
                 <table class="shopsearchlist_table">
                     <tbody>
                         <tr>
-                            <td nowrap="" id="hotel_name">
+                            <td nowrap="" id="hotel">
                                 ホテル名
                             </td>
-                            <td nowrap="" id="pref">
-                                都道府県
+                            <td nowrap="" id="customer_name">
+                                顧客名
                             </td>
                             <td nowrap="" id="created_at">
-                                登録日
+                                お客様連絡先
                             </td>
                             <td nowrap="" id="updated_at">
-                                更新日
+                                チェックイン日
+                            </td>
+                            <td nowrap="" id="updated_at">
+                                チェックアウト日
                             </td>
                             <td class="btn_center" id="edit"></td>
                             <td class="btn_center" id="delete"></td>
@@ -26,7 +29,10 @@
                         @foreach($bookings as $booking)
                             <tr style="background-color:#BDF1FF">
                                 <td>
-                                    <a href="{{ route('admin.bookings.edit', ['booking_id' => $booking['booking_id']]) }}" target="_blank">{{ $booking['customer_name'] }}</a>
+                                    {{ $booking['hotel']['hotel_name'] }}
+                                </td>
+                                <td>
+                                    {{ $booking['customer_name'] }}
                                 </td>
                                 <td>
                                     {{ $booking['customer_contact'] }}
@@ -41,9 +47,9 @@
                                     <a href="{{ route('admin.bookings.edit', ['booking_id' => $booking['booking_id']]) }}">編集</a>
                                 </td>
                                 <td>
-                                    <form action="{{ route('admin.bookings.destroy', ['booking_id' => $booking['booking_id']]) }}" onsubmit="return confirm('本当に削除しますか？');">
+                                    <form action="{{ route('admin.bookings.destroy', ['booking_id' => $booking['booking_id']]) }}" method="POST" onsubmit="return confirm('本当に削除しますか？');">
                                         @csrf
-                                        <input type="hidden" name="_method" value="DELETE">
+                                        @method('DELETE')
                                         <input type="hidden" name="booking_id" value="{{ $booking['booking_id'] }}">
                                         <button type="submit">削除</button>
                                     </form>

@@ -26,6 +26,9 @@ Route::post('/admin/hotel/create', [AdminHotelController::class, 'create'])->nam
 Route::post('/admin/hotel/delete', [AdminHotelController::class, 'delete'])->name('adminHotelDeleteProcess');
 //Booking
 Route::get('/admin/bookings', [AdminBookingController::class, 'index'])->name('admin.bookings.index');
+Route::get('/admin/bookings/search', function () {
+    return redirect()->route('admin.bookings.index');
+});
 Route::post('/admin/bookings/search', [AdminBookingController::class, 'searchResult'])->name('admin.bookings.search');
 Route::get('/admin/bookings/create', [AdminBookingController::class, 'create'])->name('admin.bookings.create');
 Route::post('/admin/bookings/store', [AdminBookingController::class, 'store'])->name('admin.bookings.store');
